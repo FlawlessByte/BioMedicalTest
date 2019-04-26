@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CanvasActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/text"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:layout_marginTop="20dp"
+        android:text="Draw the pattern!"/>
+
+
+
+    <!--<com.gis.drawingview.DrawingView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:id="@+id/drawingView"-->
+        <!--android:layout_below="@id/text"-->
+        <!--app:paintColor="@android:color/black"-->
+        <!--app:backgroundColor="@android:color/transparent"-->
+        <!--app:lineThickness="20"/>-->
+
+    <com.raed.drawingview.DrawingView
+        android:id="@+id/drawing_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/text"
+        app:brush="pen"
+        app:brush_size=".2"
+        app:brush_color="#111"
+        app:drawing_background_color="#dddddd"
+        />
+
+</RelativeLayout>

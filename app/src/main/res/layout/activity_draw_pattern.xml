@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorPrimaryDark"
+    tools:context=".DrawPattern">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:text="Draw Pattern!"
+        android:textStyle="bold"
+        android:textColor="#FFF"
+        android:layout_marginTop="16dp"
+        android:textSize="24sp"/>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:text="@string/pattern_desc"
+        android:textColor="#FFF"
+        android:padding="20dp"
+        android:layout_marginTop="44dp"
+        android:textSize="22sp"/>
+
+    <Button
+        android:id="@+id/button4"
+        style="@style/Widget.AppCompat.Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="drawPattern"
+        android:layout_marginTop="60dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginLeft="12dp"
+        android:text="Get Started!" />
+
+</LinearLayout>

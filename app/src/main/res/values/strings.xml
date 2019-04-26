@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Park-D</string>
+    <string name="pattern_desc">You have to draw a spiral with your fingers, on the picture given!</string>
+</resources>
