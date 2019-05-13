@@ -48,8 +48,7 @@ public class ClickGame extends AppCompatActivity implements View.OnClickListener
         viewGone();
 
     }
-        public void viewGone()
-        {
+    public void viewGone() {
             b1.setVisibility(View.GONE);
             b2.setVisibility(View.GONE);
             b3.setVisibility(View.GONE);
@@ -59,7 +58,8 @@ public class ClickGame extends AppCompatActivity implements View.OnClickListener
             b7.setVisibility(View.GONE);
             b8.setVisibility(View.GONE);
             b9.setVisibility(View.GONE);
-        }
+    }
+
     public int randomNumber(int startval,int endval)
     {
         r = new Random();

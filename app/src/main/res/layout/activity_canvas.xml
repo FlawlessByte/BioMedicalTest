@@ -18,15 +18,6 @@
 
 
 
-    <!--<com.gis.drawingview.DrawingView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:id="@+id/drawingView"-->
-        <!--android:layout_below="@id/text"-->
-        <!--app:paintColor="@android:color/black"-->
-        <!--app:backgroundColor="@android:color/transparent"-->
-        <!--app:lineThickness="20"/>-->
-
     <com.raed.drawingview.DrawingView
         android:id="@+id/drawing_view"
         android:layout_width="match_parent"
@@ -35,7 +26,24 @@
         app:brush="pen"
         app:brush_size=".2"
         app:brush_color="#111"
-        app:drawing_background_color="#dddddd"
-        />
+        app:drawing_background_color="#dddddd" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/accuracyTextView"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:layout_marginBottom="24dp"
+        android:layout_above="@+id/buttonCheck"/>
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonCheck"
+        android:layout_alignParentBottom="true"
+        android:onClick="checkPattern"
+        android:text="Check"/>
 
 </RelativeLayout>
