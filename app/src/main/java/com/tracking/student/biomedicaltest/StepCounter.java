@@ -6,6 +6,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.CountDownTimer;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -14,10 +15,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class StepCounter extends AppCompatActivity implements SensorEventListener {
-     private SensorManager sensorManager;
+    private SensorManager sensorManager;
     private boolean color = false;
     EditText vmax,vmin,cval;
-    private TextView view;
+    private TextView viewCounter;
     private long lastUpdate;
     int counter=0;
     double max_val=2,min_val=1;
@@ -25,7 +26,7 @@ public class StepCounter extends AppCompatActivity implements SensorEventListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_step_counter);
-        view = findViewById(R.id.textView);
+        viewCounter = findViewById(R.id.textViewCounter);
         //view.setBackgroundColor(Color.GREEN);
         vmax=findViewById(R.id.max_val);
         vmin=findViewById(R.id.min_val);
@@ -36,8 +37,10 @@ public class StepCounter extends AppCompatActivity implements SensorEventListene
 
     @Override
     public void onSensorChanged(SensorEvent event) {
+        Log.d("SensorEvent","detected");
         if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
             getAccelerometer(event);
+            Log.d("SensorType","Accelerometer");
         }
     }
     private void getAccelerometer(SensorEvent event) {
@@ -67,7 +70,8 @@ public class StepCounter extends AppCompatActivity implements SensorEventListene
 
             //view.setText("Counter: "+String.valueOf(counter)+" Acceleration: "+accelationSquareRoot+" Actual Time: "+String.valueOf(actualTime));
         }
-        view.setText(String.valueOf(counter/2));
+        Log.d("Counter", String.valueOf(counter/2));
+        viewCounter.setText(String.valueOf(counter/2));
     }
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
@@ -75,15 +79,18 @@ public class StepCounter extends AppCompatActivity implements SensorEventListene
     }
 
     public void sstart() {
+        Log.d("StartButton","pressed");
+        Log.d("StartButton", "registering sensor");
         sensorManager.registerListener(this,
                 sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
                 SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     public void sstop() {
+        Log.d("StopButton","pressed");
         sensorManager.unregisterListener(this);
         counter=0;
-        this.view.setText("0");
+        this.viewCounter.setText("0");
 
     }
 
@@ -99,7 +106,7 @@ public class StepCounter extends AppCompatActivity implements SensorEventListene
     public void mwalk(View view) {
         EditText et=findViewById(R.id.mwalk);
         TextView tv=findViewById(R.id.mwalkresult);
-        double countingval=Double.valueOf(this.view.getText().toString());
+        double countingval=Double.valueOf(this.viewCounter.getText().toString());
         double meter=Double.valueOf(et.getText().toString());
         double res=meter/countingval;
         tv.setText(String.valueOf(res));
