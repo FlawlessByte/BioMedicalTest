@@ -41,75 +41,57 @@ public class CanvasActivity extends AppCompatActivity {
         drawingView = (DrawingView) findViewById(R.id.drawing_view);
         accuracyTextView = findViewById(R.id.accuracyTextView);
 
-        bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.spiral_edit);
+        bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.spiral_back);
         drawingView.setBackgroundImage(bitmap);
 
     }
 
     public void checkPattern(View view){
-        Bitmap bm = drawingView.exportDrawingWithoutBackground();
-//        drawingView.clear();
-//        drawingView.setBackgroundImage(bm);
-        double perc = getDifferencePercent(bitmap, bm);
-        Log.d("Percentage", ""+perc);
-        accuracyTextView.setText("Accuracy : "+df2.format(perc)+"%");
+        findDifference(bitmap,drawingView.exportDrawing());
     }
 
 
+    private void findDifference(Bitmap firstImage, Bitmap secondImage) {
+        int width = firstImage.getWidth();
+        int height = firstImage.getHeight();
 
 
+        secondImage = getResizedBitmap(secondImage, width, height);
 
 
+        Bitmap bmp = secondImage.copy(secondImage.getConfig(), true);
 
-
-    private static double getDifferencePercent(Bitmap img1, Bitmap img2) {
-        int width = img1.getWidth();
-        int height = img1.getHeight();
-
-
-        img2 = getResizedBitmap(img2, width, height);
-
-        int width2 = img2.getWidth();
-        int height2 = img2.getHeight();
-
-        if (width != width2 || height != height2) {
-            throw new IllegalArgumentException(String.format("Images must have the same dimensions: (%d,%d) vs. (%d,%d)", width, height, width2, height2));
+        if (firstImage.getWidth() != secondImage.getWidth()
+                || firstImage.getHeight() != secondImage.getHeight()) {
+            return;
         }
 
-        long diff = 0;
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                diff += pixelDiff(getRGB(x, y, img1), getRGB(x, y, img2));
+        float totalPixels = 0;
+        float coloredPixels = 0;
+        for (int i = 0; i < firstImage.getWidth(); i++) {
+            for (int j = 0; j < firstImage.getHeight(); j++) {
+                totalPixels++;
+                if (firstImage.getPixel(i, j) != secondImage.getPixel(i, j)) {
+                    bmp.setPixel(i, j, Color.BLUE);
+                    coloredPixels++;
+                }
+                else
+                    bmp.setPixel(i,j,Color.WHITE);
             }
         }
-        long maxDiff = 3L * 255 * width * height;
 
-        return 100.0 * diff / maxDiff;
-    }
+        drawingView.setBackgroundImage(null);
+        drawingView.setBackgroundImage(bmp);
 
-    private static int pixelDiff(int rgb1, int rgb2) {
-        int r1 = (rgb1 >> 16) & 0xff;
-        int g1 = (rgb1 >>  8) & 0xff;
-        int b1 =  rgb1        & 0xff;
-        int r2 = (rgb2 >> 16) & 0xff;
-        int g2 = (rgb2 >>  8) & 0xff;
-        int b2 =  rgb2        & 0xff;
-        return Math.abs(r1 - r2) + Math.abs(g1 - g2) + Math.abs(b1 - b2);
+        Log.d("Total Pixels",""+totalPixels);
+        Log.d("colored Pixels",""+coloredPixels);
+
+        float change = (coloredPixels/totalPixels)*100;
+        Log.d("Change",""+change);
+        accuracyTextView.setText("Total accuracy : "+(100-change));
     }
 
 
-    private static int getRGB(int x, int y, Bitmap img){
-        int colour = img.getPixel(x, y);
-
-        int red = Color.red(colour);
-        int blue = Color.blue(colour);
-        int green = Color.green(colour);
-        int alpha = Color.alpha(colour);
-
-        return (alpha << 24) | (red << 16) | (green << 8) | blue;
-
-
-    }
 
 
     private static Bitmap getResizedBitmap(Bitmap bm, int newWidth, int newHeight) {
